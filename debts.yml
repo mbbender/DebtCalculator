@@ -1,0 +1,12 @@
+- name : Mortgage
+  minimum-payment : 1435
+  interest-rate : 3.75
+  current-balance: 297947
+- name : Student Loan
+  minimum-payment : 41.29
+  interest-rate : 2.07
+  current-balance: 3997.1
+- name : Car
+  minimum-payment : 526
+  interest-rate : 0
+  current-balance: 21044.07
