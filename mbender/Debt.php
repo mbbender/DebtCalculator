@@ -7,10 +7,12 @@ use Money\Money;
 
 class Debt {
 
+    private $id;
     private $name;
     private $currentInterestRate;
     private $currentBalance;
     private $minimumPayment;
+    private $minimumPayoffPeriod;
 
 
     private function __construct($name = null,
@@ -19,10 +21,12 @@ class Debt {
                                 $minimumPayment = null)
     {
 
+        $this->id = uniqid();
         $this->setName($name);
         $this->setCurrentInterestRate($currentInterestRate);
         $this->setCurrentBalance($currentBalance);
         $this->setMinimumPayment($minimumPayment);
+        $this->setMinimumPayoffPeriod();
     }
 
     public static function fromYaml($yaml)
@@ -33,6 +37,10 @@ class Debt {
             $yaml['current-balance'],
             $yaml['minimum-payment']
         );
+    }
+
+    public function getId(){
+        return $this->id;
     }
 
     /**
@@ -62,7 +70,7 @@ class Debt {
     /**
      * @param mixed $currentInterestRate
      */
-    public function setCurrentInterestRate($currentInterestRate)
+    protected function setCurrentInterestRate($currentInterestRate)
     {
         $this->currentInterestRate = $currentInterestRate / 100;
     }
@@ -78,7 +86,7 @@ class Debt {
     /**
      * @param mixed $currentBalance
      */
-    public function setCurrentBalance($currentBalance)
+    protected function setCurrentBalance($currentBalance)
     {
         $this->currentBalance = Money::USD((int)($currentBalance*100));
     }
@@ -95,11 +103,23 @@ class Debt {
     /**
      * @param mixed $minimumPayment
      */
-    public function setMinimumPayment($minimumPayment)
+    protected function setMinimumPayment($minimumPayment)
     {
         $this->minimumPayment = Money::USD((int)($minimumPayment*100));
     }
 
+    public function getMinimumPayoffPeriod()
+    {
+        return $this->minimumPayoffPeriod;
+    }
+
+    protected function setMinimumPayoffPeriod()
+    {
+        $this->minimumPayoffPeriod = (new \Financial())->NPER(
+            $this->getCurrentInterestRate()/12,
+            $this->getMinimumPayment()*-1,
+            $this->getCurrentBalance());
+    }
 
 
 }

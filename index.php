@@ -1,8 +1,11 @@
 <?php
 
 use Mbender\Debt;
+use Mbender\DebtScenario;
 use Mbender\LoanCalculator;
+use Mbender\YamlLumpPaymentRepository;
 use Mbender\YamlDebtRepository;
+use Mbender\YamlMonthlyPaymentRepository;
 use Windwalker\Renderer\BladeRenderer;
 
 date_default_timezone_set('America/New_York');
@@ -14,16 +17,16 @@ $cache = __DIR__ . '/cache';
 $blade = new BladeRenderer($views,array('cache_path' => $cache));
 
 
-$debts = (new YamlDebtRepository('debts.yml'))->all();
+$dm = new DebtScenario(
+    (new YamlDebtRepository('data.yml'))->all(),
+    (new YamlLumpPaymentRepository('data.yml'))->all(),
+    (new YamlMonthlyPaymentRepository('data.yml'))->all()
+);
 
-foreach($debts as $debt)
-{
-    $debt->minPayoff = \Mbender\HumanTimeFormatter::humanTimeFromMonths(
-        LoanCalculator::NPER(
-            $debt->getCurrentInterestRate(),
-            $debt->getMinimumPayment(),
-            $debt->getCurrentBalance())
-    );
-}
 
-echo $blade->render('debt-table',['debts' => $debts]);
+echo $blade->render('dashboard',
+    [
+        'debts' => $dm->getDebts(),
+        'lumpPayments' => $dm->getLumpPayments(),
+        'monthlyPayments' => $dm->getMonthlyPayments()
+    ]);

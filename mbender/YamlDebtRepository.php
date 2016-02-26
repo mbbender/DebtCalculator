@@ -20,7 +20,7 @@ class YamlDebtRepository {
     public function all()
     {
         $debts = [];
-        foreach(Yaml::parse(file_get_contents($this->filename)) as $debt)
+        foreach(Yaml::parse(file_get_contents($this->filename))['debts'] as $debt)
         {
             $debts[] = Debt::fromYaml($debt);
         }
