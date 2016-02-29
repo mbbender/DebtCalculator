@@ -1,0 +1,44 @@
+debts:
+  - name : 828 Woodburn Mortgage
+    minimum-payment : 1435
+    interest-rate : 3.75
+    current-balance: 297947
+  - name : SAH Student Loan - Group A
+    minimum-payment : 41.29
+    interest-rate : 2.07
+    current-balance: 3997.1
+  - name : SAH Student Loan - Group B
+    minimum-payment : 111.37
+    interest-rate : 2.07
+    current-balance: 10916.1
+  - name : SAH Student Loan - Group D
+    minimum-payment : 75
+    interest-rate : 3
+    current-balance: 14292.29
+  - name : SAH Student Loan - Group E
+    minimum-payment : 63
+    interest-rate : 3
+    current-balance: 8995.27
+  - name : SAH Student Loan - Group F
+    minimum-payment : 151
+    interest-rate : 3
+    current-balance: 28942.71
+  - name : 4Runner
+    minimum-payment : 526
+    interest-rate : 0
+    current-balance: 21044.07
+  - name : Margin Loan
+    minimum-payment : 0
+    interest-rate : 1
+    current-balance: 198254.21
+lump:
+  - memo : Company Payout
+    amount : 116000
+    date : 03/10/2016
+  - memo : Company Payout
+    amount : 60000
+    date : 03/20/2017
+monthly:
+  - memo: Second Job
+    amount: 5500
+    start-date: 03/01/2016
